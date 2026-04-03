@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Pezuño Keep 🐴</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); 
+  min-height: 100vh; 
+  padding: 1rem;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+.container { max-width: 600px; margin: 0 auto; }
+
+/* HEADER */
+.header { text-align: center; margin-bottom: 2rem; }
+.header h1 { color: #ff9800; font-size: 2.5rem; margin-bottom: 0.5rem; }
+.header p { color: #888; font-size: 1.1rem; }
+.caballo { font-size: 3rem; }
+
+/* CARDS */
+.card {
+  background: #1e1e2e;
+  border-radius: 20px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 2px solid #333;
+}
+.card-title { color: #fff; font-size: 1.3rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+
+/* INPUTS GRANDES */
+.input-grande {
+  width: 100%;
+  padding: 1.2rem;
+  font-size: 1.1rem;
+  border: 3px solid #333;
+  border-radius: 15px;
+  background: #2a2a3e;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+.input-grande:focus { outline: none; border-color: #ff9800; }
+.input-grande::placeholder { color: #666; }
+
+/* BOTONES GRANDES */
+.btn-grande {
+  width: 100%;
+  padding: 1.2rem;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: transform 0.1s;
+}
+.btn-grande:active { transform: scale(0.98); }
+
+.btn-naranja { background: linear-gradient(135deg, #ff9800, #e65100); color: white; }
+.btn-naranja:hover { background: linear-gradient(135deg, #ffb74d, #f57c00); }
+
+.btn-verde { background: linear-gradient(135deg, #4caf50, #2e7d32); color: white; }
+.btn-verde:hover { background: linear-gradient(135deg, #66bb6a, #43a047); }
+
+.btn-azul { background: linear-gradient(135deg, #2196f3, #1565c0); color: white; }
+.btn-azul:hover { background: linear-gradient(135deg, #42a5f5, #1976d2); }
+
+/* CHECKLIST ITEMS */
+.item-lista {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: #2a2a3e;
+  border-radius: 12px;
+  margin-bottom: 0.8rem;
+  border: 2px solid transparent;
+}
+.item-lista.checkeado { border-color: #4caf50; opacity: 0.6; }
+.item-lista.checkeado .texto { text-decoration: line-through; }
+
+.checkbox-grande {
+  width: 30px;
+  height: 30px;
+  accent-color: #4caf50;
+  cursor: pointer;
+}
+
+.texto { color: #fff; font-size: 1.1rem; flex: 1; }
+
+.btn-borrar {
+  background: #ff5252;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+/* NOTAS */
+.nota {
+  background: #2a2a3e;
+  border-radius: 12px;
+  padding: 1.2rem;
+  margin-bottom: 1rem;
+  border-left: 4px solid #ff9800;
+}
+.nota-texto { color: #fff; font-size: 1.1rem; line-height: 1.5; margin-bottom: 0.5rem; }
+.nota-fecha { color: #666; font-size: 0.85rem; }
+
+/* ACCIONES INFERIORES */
+.acciones { display: flex; gap: 0.8rem; margin-top: 1.5rem; }
+.acciones button { flex: 1; }
+
+/* FOOTER */
+.footer { text-align: center; margin-top: 2rem; color: #555; font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="caballo">🐴</div>
+    <h1>Pezuño Keep</h1>
+    <p>Tus ideas y pendientes, siempre contigo</p>
+  </div>
+
+  <!-- NOTAS -->
+  <div class="card">
+    <div class="card-title">📝 Escribir nota</div>
+    <textarea id="nuevaNota" class="input-grande" placeholder="¿Qué se te ocurre? Escribí nomás..."></textarea>
+    <button class="btn-grande btn-naranja" onclick="agregarNota()">✅ Guardar nota</button>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📋 Tus notas</div>
+    <div id="listaNotas"></div>
+  </div>
+
+  <!-- CHECKLIST -->
+  <div class="card">
+    <div class="card-title">✅ Pendientes</div>
+    <input type="text" id="nuevaTarea" class="input-grande" placeholder="Escribí algo por hacer...">
+    <button class="btn-grande btn-verde" onclick="agregarTarea()">➕ Agregar tarea</button>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📋 Lista de cosas</div>
+    <div id="listaTareas"></div>
+  </div>
+
+  <!-- GUARDAR/CARGAR -->
+  <div class="card">
+    <div class="card-title">💾 Tu respaldo</div>
+    <div class="acciones">
+      <button class="btn-grande btn-azul" onclick="guardar()">📥 Guardar a archivo</button>
+      <button class="btn-grande btn-azul" onclick="document.getElementById('fileInput').click()">📤 Cargar archivo</button>
+      <input type="file" id="fileInput" accept=".json" style="display:none" onchange="cargar(this)">
+    </div>
+    <p style="color:#666;margin-top:1rem;font-size:0.9rem;">Guardá el archivo y subilo a Drive. Así siempre tenés tus datos.</p>
+  </div>
+
+  <div class="footer">
+    Hecho por Pezuño 🐴 para Renate
+  </div>
+</div>
+
+<script>
+// CARGAR DESDE LOCALSTORAGE
+let notas = JSON.parse(localStorage.getItem('pezu_notas') || '[]');
+let tareas = JSON.parse(localStorage.getItem('pezu_tareas') || '[]');
+
+function guardarDatos() {
+  localStorage.setItem('pezu_notas', JSON.stringify(notas));
+  localStorage.setItem('pezu_tareas', JSON.stringify(tareas));
+}
+
+function render() {
+  // NOTAS
+  const divNotas = document.getElementById('listaNotas');
+  divNotas.innerHTML = '';
+  notas.slice().reverse().forEach((n, i) => {
+    const div = document.createElement('div');
+    div.className = 'nota';
+    div.innerHTML = `
+      <div class="nota-texto">${n.text}</div>
+      <div class="nota-fecha">${new Date(n.time).toLocaleString('es-CL')}</div>
+      <button class="btn-borrar" onclick="borrarNota(${notas.length - 1 - i})" style="margin-top:0.5rem">🗑️ Borrar</button>
+    `;
+    divNotas.appendChild(div);
+  });
+
+  // TAREAS
+  const divTareas = document.getElementById('listaTareas');
+  divTareas.innerHTML = '';
+  tareas.forEach((t, i) => {
+    const div = document.createElement('div');
+    div.className = 'item-lista' + (t.done ? ' checkeado' : '');
+    div.innerHTML = `
+      <input type="checkbox" class="checkbox-grande" ${t.done ? 'checked' : ''} onchange="toggleTarea(${i})">
+      <span class="texto">${t.text}</span>
+      <button class="btn-borrar" onclick="borrarTarea(${i})">✕</button>
+    `;
+    divTareas.appendChild(div);
+  });
+}
+
+function agregarNota() {
+  const input = document.getElementById('nuevaNota');
+  if (!input.value.trim()) return;
+  notas.push({ text: input.value.trim(), time: Date.now() });
+  input.value = '';
+  guardarDatos();
+  render();
+}
+
+function agregarTarea() {
+  const input = document.getElementById('nuevaTarea');
+  if (!input.value.trim()) return;
+  tareas.push({ text: input.value.trim(), done: false, time: Date.now() });
+  input.value = '';
+  guardarDatos();
+  render();
+}
+
+function toggleTarea(i) {
+  tareas[i].done = !tareas[i].done;
+  guardarDatos();
+  render();
+}
+
+function borrarNota(i) {
+  notas.splice(i, 1);
+  guardarDatos();
+  render();
+}
+
+function borrarTarea(i) {
+  tareas.splice(i, 1);
+  guardarDatos();
+  render();
+}
+
+function guardar() {
+  const data = { notas, tareas, guardado: new Date().toISOString() };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'PezuñoKeep.json';
+  a.click();
+  alert('📥 Listo! Subilo a Drive para tener siempre tu backup');
+}
+
+function cargar(input) {
+  const f = input.files[0];
+  if (!f) return;
+  const r = new FileReader();
+  r.onload = e => {
+    try {
+      const d = JSON.parse(e.target.result);
+      if (d.notas) { notas = d.notas; }
+      if (d.tareas) { tareas = d.tareas; }
+      guardarDatos();
+      render();
+      alert('📤 Datos cargados!');
+    } catch(err) {
+      alert('Error: ' + err.message);
+    }
+  };
+  r.readAsText(f);
+  input.value = '';
+}
+
+// ENTER para agregar
+document.getElementById('nuevaNota').addEventListener('keydown', e => { if(e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); agregarNota(); } });
+document.getElementById('nuevaTarea').addEventListener('keydown', e => { if(e.key === 'Enter') { e.preventDefault(); agregarTarea(); } });
+
+render();
+</script>
+</body>
+</html>
