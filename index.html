@@ -1,301 +1,969 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Pezuño Keep 🐴</title>
-<style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { 
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); 
-  min-height: 100vh; 
-  padding: 1rem;
-  font-family: system-ui, -apple-system, sans-serif;
-}
-.container { max-width: 600px; margin: 0 auto; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#523626">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>PezuñoKeep</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="../../02_BRANDING/icons/main/128x128/Copilot_20260412_203927-128.png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --core-brown: #523626;
+            --tall-dark: #2C2020;
+            --field-green: #4CAF50;
+            --sky-blue: #32CEFE;
+            --cream: #F3F2E7;
+            --white: #FFFFFF;
+            --shadow-light: #e0e0e0;
+            --shadow-dark: #bebebe;
+        }
 
-/* HEADER */
-.header { text-align: center; margin-bottom: 2rem; }
-.header h1 { color: #ff9800; font-size: 2.5rem; margin-bottom: 0.5rem; }
-.header p { color: #888; font-size: 1.1rem; }
-.caballo { font-size: 3rem; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-/* CARDS */
-.card {
-  background: #1e1e2e;
-  border-radius: 20px;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  border: 2px solid #333;
-}
-.card-title { color: #fff; font-size: 1.3rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: var(--white);
+            color: var(--tall-dark);
+            min-height: 100vh;
+            overflow-x: auto;
+        }
 
-/* INPUTS GRANDES */
-.input-grande {
-  width: 100%;
-  padding: 1.2rem;
-  font-size: 1.1rem;
-  border: 3px solid #333;
-  border-radius: 15px;
-  background: #2a2a3e;
-  color: #fff;
-  margin-bottom: 1rem;
-}
-.input-grande:focus { outline: none; border-color: #ff9800; }
-.input-grande::placeholder { color: #666; }
+        /* Header */
+        .header {
+            background: var(--white);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--cream);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-/* BOTONES GRANDES */
-.btn-grande {
-  width: 100%;
-  padding: 1.2rem;
-  font-size: 1.2rem;
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: transform 0.1s;
-}
-.btn-grande:active { transform: scale(0.98); }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--core-brown);
+        }
 
-.btn-naranja { background: linear-gradient(135deg, #ff9800, #e65100); color: white; }
-.btn-naranja:hover { background: linear-gradient(135deg, #ffb74d, #f57c00); }
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            box-shadow: 2px 2px 4px var(--shadow-light);
+            object-fit: cover;
+        }
 
-.btn-verde { background: linear-gradient(135deg, #4caf50, #2e7d32); color: white; }
-.btn-verde:hover { background: linear-gradient(135deg, #66bb6a, #43a047); }
+        .logo-icon {
+            font-size: 2rem;
+        }
 
-.btn-azul { background: linear-gradient(135deg, #2196f3, #1565c0); color: white; }
-.btn-azul:hover { background: linear-gradient(135deg, #42a5f5, #1976d2); }
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
 
-/* CHECKLIST ITEMS */
-.item-lista {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem;
-  background: #2a2a3e;
-  border-radius: 12px;
-  margin-bottom: 0.8rem;
-  border: 2px solid transparent;
-}
-.item-lista.checkeado { border-color: #4caf50; opacity: 0.6; }
-.item-lista.checkeado .texto { text-decoration: line-through; }
+        .btn-icon {
+            background: var(--cream);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            box-shadow: 3px 3px 6px var(--shadow-light),
+                        -3px -3px 6px var(--white);
+            transition: all 0.2s;
+        }
 
-.checkbox-grande {
-  width: 30px;
-  height: 30px;
-  accent-color: #4caf50;
-  cursor: pointer;
-}
+        .btn-icon:hover {
+            box-shadow: 5px 5px 10px var(--shadow-light),
+                        -5px -5px 10px var(--white);
+        }
 
-.texto { color: #fff; font-size: 1.1rem; flex: 1; }
+        .btn-icon:active {
+            box-shadow: inset 3px 3px 6px var(--shadow-light),
+                        inset -3px -3px 6px var(--white);
+        }
 
-.btn-borrar {
-  background: #ff5252;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 1rem;
-}
+        /* Main Board */
+        .board {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            min-height: calc(100vh - 80px);
+            overflow-x: auto;
+        }
 
-/* NOTAS */
-.nota {
-  background: #2a2a3e;
-  border-radius: 12px;
-  padding: 1.2rem;
-  margin-bottom: 1rem;
-  border-left: 4px solid #ff9800;
-}
-.nota-texto { color: #fff; font-size: 1.1rem; line-height: 1.5; margin-bottom: 0.5rem; }
-.nota-fecha { color: #666; font-size: 0.85rem; }
+        /* Columns */
+        .column {
+            min-width: 280px;
+            max-width: 320px;
+            background: var(--cream);
+            border-radius: 16px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            box-shadow: 5px 5px 10px var(--shadow-light),
+                        -5px -5px 10px var(--white);
+        }
 
-/* ACCIONES INFERIORES */
-.acciones { display: flex; gap: 0.8rem; margin-top: 1.5rem; }
-.acciones button { flex: 1; }
+        .column-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--white);
+        }
 
-/* FOOTER */
-.footer { text-align: center; margin-top: 2rem; color: #555; font-size: 0.9rem; }
-</style>
+        .column-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .column-count {
+            background: var(--white);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            box-shadow: 2px 2px 4px var(--shadow-light),
+                        -2px -2px 4px rgba(255,255,255,0.8);
+        }
+
+        /* Column Colors */
+        .column-inbox .column-title { color: var(--tall-dark); }
+        .column-today .column-title { color: var(--field-green); }
+        .column-calendar .column-title { color: var(--sky-blue); }
+        .column-projects .column-title { color: var(--core-brown); }
+        .column-references .column-title { color: #666; }
+
+        /* Cards */
+        .cards-container {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            min-height: 100px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 3px 3px 6px var(--shadow-light),
+                        -3px -3px 6px rgba(255,255,255,0.8);
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 5px 5px 10px var(--shadow-light),
+                        -5px -5px 10px rgba(255,255,255,0.8);
+        }
+
+        .card.dragging {
+            opacity: 0.5;
+        }
+
+        .card-priority-high {
+            border-left: 4px solid #ff4444;
+        }
+
+        .card-priority-medium {
+            border-left: 4px solid #ffaa00;
+        }
+
+        .card-priority-low {
+            border-left: 4px solid #44aa44;
+        }
+
+        .card-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .card-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .card-icon-placeholder {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            background: var(--cream);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            color: #666;
+        }
+
+        .card-tags {
+            display: flex;
+            gap: 0.3rem;
+        }
+
+        .tag {
+            background: var(--cream);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+        }
+
+        /* Add Button */
+        .btn-add {
+            background: var(--cream);
+            border: none;
+            padding: 0.75rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            color: var(--tall-dark);
+            box-shadow: 2px 2px 4px var(--shadow-light),
+                        -2px -2px 4px var(--white);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-add:hover {
+            box-shadow: 4px 4px 8px var(--shadow-light),
+                        -4px -4px 8px var(--white);
+        }
+
+        .btn-add:active {
+            box-shadow: inset 2px 2px 4px var(--shadow-light),
+                        inset -2px -2px 4px var(--white);
+        }
+
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--field-green);
+            color: white;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .fab:hover {
+            transform: scale(1.1);
+            box-shadow: 8px 8px 20px rgba(0,0,0,0.4);
+        }
+
+        .fab-menu {
+            position: fixed;
+            bottom: 6rem;
+            right: 2rem;
+            display: none;
+            flex-direction: column;
+            gap: 0.5rem;
+            z-index: 999;
+        }
+
+        .fab-menu.active {
+            display: flex;
+        }
+
+        .fab-item {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            box-shadow: 3px 3px 8px rgba(0,0,0,0.2);
+            transition: all 0.2s;
+        }
+
+        .fab-item:hover {
+            transform: scale(1.1);
+        }
+
+        .fab-note { background: var(--sky-blue); color: white; }
+        .fab-voice { background: #ff4444; color: white; }
+        .fab-image { background: #ffaa00; color: white; }
+        .fab-link { background: #aa44aa; color: white; }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 10px 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .modal-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--core-brown);
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .input-group input,
+        .input-group textarea,
+        .input-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            background: var(--cream);
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1rem;
+            box-shadow: inset 2px 2px 4px var(--shadow-light),
+                        inset -2px -2px 4px rgba(255,255,255,0.8);
+        }
+
+        .input-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 1.5rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary {
+            background: var(--cream);
+            color: var(--tall-dark);
+        }
+
+        .btn-primary {
+            background: var(--field-green);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 3px 3px 8px rgba(0,0,0,0.2);
+        }
+
+        /* Icon Selector */
+        .icon-selector {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            border-radius: 8px;
+            background: var(--cream);
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: inset 2px 2px 4px var(--shadow-light),
+                        inset -2px -2px 4px rgba(255,255,255,0.8);
+        }
+
+        .icon-selector:hover {
+            background: var(--white);
+        }
+
+        .icon-selector img {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+
+        .icon-selector span:last-child {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* Icon Gallery Modal */
+        .icon-gallery {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .icon-gallery.active {
+            display: flex;
+        }
+
+        .icon-gallery-content {
+            background: var(--white);
+            border-radius: 16px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 10px 10px 40px rgba(0,0,0,0.5);
+        }
+
+        .icon-gallery-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 2px solid var(--cream);
+        }
+
+        .icon-gallery-header h3 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--core-brown);
+            font-size: 1.2rem;
+        }
+
+        .icon-gallery-tabs {
+            display: flex;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            background: var(--cream);
+        }
+
+        .icon-tab {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 20px;
+            background: var(--white);
+            color: var(--tall-dark);
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .icon-tab:hover, .icon-tab.active {
+            background: var(--core-brown);
+            color: white;
+        }
+
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 1rem;
+            padding: 1.5rem;
+            overflow-y: auto;
+            max-height: 400px;
+        }
+
+        .icon-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            border-radius: 12px;
+            background: var(--cream);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .icon-item:hover {
+            background: var(--field-green);
+            transform: scale(1.05);
+        }
+
+        .icon-item img {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .icon-item span {
+            font-size: 0.7rem;
+            color: #666;
+            text-align: center;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .board {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .column {
+                min-width: 100%;
+                max-width: 100%;
+            }
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--cream);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--core-brown);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--tall-dark);
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-  <div class="header">
-    <div class="caballo">🐴</div>
-    <h1>Pezuño Keep</h1>
-    <p>Tus ideas y pendientes, siempre contigo</p>
-  </div>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <img src="../../02_BRANDING/icons/main/64x64/Copilot_20260412_203927-64.png" class="logo-img" alt="Pezuño" id="header-logo">
+            <span>PezuñoKeep</span>
+        </div>
+        <div class="header-actions">
+            <button class="btn-icon" title="Galería de Iconos" onclick="openIconGallery()">🐴</button>
+            <button class="btn-icon" title="Buscar">🔍</button>
+            <button class="btn-icon" title="Configuración">⚙️</button>
+            <button class="btn-icon" title="Ayuda">❓</button>
+        </div>
+    </header>
 
-  <!-- NOTAS -->
-  <div class="card">
-    <div class="card-title">📝 Escribir nota</div>
-    <textarea id="nuevaNota" class="input-grande" placeholder="¿Qué se te ocurre? Escribí nomás..."></textarea>
-    <button class="btn-grande btn-naranja" onclick="agregarNota()">✅ Guardar nota</button>
-  </div>
+    <!-- Main Board -->
+    <main class="board" id="board">
+        <!-- Column: INBOX -->
+        <section class="column column-inbox" data-column="inbox">
+            <div class="column-header">
+                <div class="column-title">
+                    <span>📥</span>
+                    <span>INBOX</span>
+                </div>
+                <span class="column-count" id="count-inbox">0</span>
+            </div>
+            <div class="cards-container" id="inbox-cards">
+                <!-- Cards go here -->
+            </div>
+            <button class="btn-add" onclick="addCard('inbox')">
+                <span>+</span>
+                <span>Agregar</span>
+            </button>
+        </section>
 
-  <div class="card">
-    <div class="card-title">📋 Tus notas</div>
-    <div id="listaNotas"></div>
-  </div>
+        <!-- Column: HOY -->
+        <section class="column column-today" data-column="today">
+            <div class="column-header">
+                <div class="column-title">
+                    <span>⚡</span>
+                    <span>HOY</span>
+                </div>
+                <span class="column-count" id="count-today">0</span>
+            </div>
+            <div class="cards-container" id="today-cards">
+                <!-- Cards go here -->
+            </div>
+            <button class="btn-add" onclick="addCard('today')">
+                <span>+</span>
+                <span>Agregar</span>
+            </button>
+        </section>
 
-  <!-- CHECKLIST -->
-  <div class="card">
-    <div class="card-title">✅ Pendientes</div>
-    <input type="text" id="nuevaTarea" class="input-grande" placeholder="Escribí algo por hacer...">
-    <button class="btn-grande btn-verde" onclick="agregarTarea()">➕ Agregar tarea</button>
-  </div>
+        <!-- Column: CALENDARIO -->
+        <section class="column column-calendar" data-column="calendar">
+            <div class="column-header">
+                <div class="column-title">
+                    <span>📅</span>
+                    <span>CALENDARIO</span>
+                </div>
+                <span class="column-count" id="count-calendar">0</span>
+            </div>
+            <div class="cards-container" id="calendar-cards">
+                <!-- Cards go here -->
+            </div>
+            <button class="btn-add" onclick="addCard('calendar')">
+                <span>+</span>
+                <span>Agregar</span>
+            </button>
+        </section>
 
-  <div class="card">
-    <div class="card-title">📋 Cosas por hacer</div>
-    <div id="listaTareas"></div>
-  </div>
+        <!-- Column: PROYECTOS -->
+        <section class="column column-projects" data-column="projects">
+            <div class="column-header">
+                <div class="column-title">
+                    <span>🐴</span>
+                    <span>PROYECTOS</span>
+                </div>
+                <span class="column-count" id="count-projects">0</span>
+            </div>
+            <div class="cards-container" id="projects-cards">
+                <!-- Cards go here -->
+            </div>
+            <button class="btn-add" onclick="addCard('projects')">
+                <span>+</span>
+                <span>Agregar</span>
+            </button>
+        </section>
 
-  <!-- GUARDAR/CARGAR -->
-  <div class="card">
-    <div class="card-title">💾 Tu respaldo</div>
-    <div class="acciones">
-      <button class="btn-grande btn-azul" onclick="guardar()">📥 Guardar a archivo</button>
-      <button class="btn-grande btn-azul" onclick="document.getElementById('fileInput').click()">📤 Cargar archivo</button>
-      <input type="file" id="fileInput" accept=".json" style="display:none" onchange="cargar(this)">
+        <!-- Column: REFERENCIAS -->
+        <section class="column column-references" data-column="references">
+            <div class="column-header">
+                <div class="column-title">
+                    <span>📚</span>
+                    <span>REFERENCIAS</span>
+                </div>
+                <span class="column-count" id="count-references">0</span>
+            </div>
+            <div class="cards-container" id="references-cards">
+                <!-- Cards go here -->
+            </div>
+            <button class="btn-add" onclick="addCard('references')">
+                <span>+</span>
+                <span>Agregar</span>
+            </button>
+        </section>
+    </main>
+
+    <!-- Floating Action Button -->
+    <div class="fab-menu" id="fab-menu">
+        <button class="fab-item fab-link" title="Link">🔗</button>
+        <button class="fab-item fab-image" title="Imagen">📸</button>
+        <button class="fab-item fab-voice" title="Voz">🎤</button>
+        <button class="fab-item fab-note" title="Nota">📝</button>
     </div>
-    <p style="color:#666;margin-top:1rem;font-size:0.9rem;">Guardá el archivo y subilo a Drive. Así siempre tenés tus datos.</p>
-  </div>
+    <button class="fab" id="fab" onclick="toggleFabMenu()">+</button>
 
-  <div class="footer">
-    Hecho por Pezuño 🐴 para Renate
-  </div>
-</div>
+    <!-- Modal -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal">
+            <h2 class="modal-title" id="modal-title">Nueva Nota</h2>
+            <div class="input-group">
+                <label for="note-title">Título</label>
+                <input type="text" id="note-title" placeholder="¿Qué necesitas recordar?">
+            </div>
+            <div class="input-group">
+                <label for="note-content">Contenido</label>
+                <textarea id="note-content" placeholder="Detalles..."></textarea>
+            </div>
+            <div class="input-group">
+                <label for="note-priority">Prioridad</label>
+                <select id="note-priority">
+                    <option value="low">🔵 Baja</option>
+                    <option value="medium" selected>🟡 Media</option>
+                    <option value="high">🔴 Alta</option>
+                </select>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
+                <button class="btn btn-primary" onclick="saveCard()">Guardar</button>
+            </div>
+        </div>
+    </div>
 
-<script>
-// NOTAS Y TAREAS DE RENATE - cargadas automáticamente
-const NOTAS_INICIALES = [
-  { text: "Para mí es muy importante el autocuidado, pero no lo practico. Me cuesta mucho: meditación, tomar agua, estirarme, cuidar mi cara y cuerpo, hacer deporte. TOMAR MI MEDICAMENTO DIARIO (Desvenlafaxina)", time: 1743669258000 },
-  { text: "Operativamente bien, económicamente bien (podría ser mejor)", time: 1743680000000 },
-  { text: "OBJETIVOS CLAVE: rutina clara con tiempos acotados para cada cosa. Locatering completamente automatizado con procesos y responsables claros. Autosuficiencia económica con ingresos pasivos. Activar espacio Carlos Antunes con Florentina (cafetería + Cholitas del Cacao)", time: 1743680287000 },
-  { text: "Agradecer a Pezuño por ser el mejor caballo 🐴 Quiero que busques maneras de que tengamos un mejor vivir todas las noches entre 5 AM y 7 AM. Herramientas, novedades, opciones para hacer upgrade de la vida misma.", time: 1743682057000 },
-  { text: "IDEAS DE APLICACIONES: 1) App para empresas de catering con gestión de pedidos en formato encuesta de menú para productores y operarios. 2) Convertir radio multimedia antigua de auto en CarPlay - desde USB", time: 1743685657000 }
-];
+    <script>
+        // Data Store
+        let cards = JSON.parse(localStorage.getItem('pezunokeep-cards')) || [];
+        let currentColumn = 'inbox';
 
-const TAREAS_INICIALES = [
-  { text: "Permiso de circulación", done: false, time: 1743686880000 },
-  { text: "Pagar IVA", done: false, time: 1743686880000 },
-  { text: "Pagar arriendo de taller", done: false, time: 1743686880000 },
-  { text: "Pagar Nela", done: false, time: 1743686880000 },
-  { text: "Pagar Cholitas del Cacao", done: false, time: 1743686880000 },
-  { text: "Contar a Pezuño objetivos corto y largo plazo", done: true, time: 1743686880000 },
-  { text: "Que Pezuño identifique herramientas para horarios sin trabajo", done: false, time: 1743686880000 },
-  { text: "Ideas de aplicaciones para emprendimiento", done: false, time: 1743686880000 }
-];
+        // Legacy Tasks from MASTER_DATA
+        const legacyTasks = [
+            { text: "Permiso de circulación", priority: "high", column: "today" },
+            { text: "Pagar IVA", priority: "high", column: "today" },
+            { text: "Pagar arriendo de taller", priority: "high", column: "today" },
+            { text: "Pagar Nela", priority: "medium", column: "inbox" },
+            { text: "Pagar Cholitas del Cacao", priority: "medium", column: "inbox" },
+            { text: "Herramientas para horarios 5-7 AM", priority: "medium", column: "inbox" },
+            { text: "Ideas apps emprendimiento", priority: "low", column: "references" }
+        ];
 
-// Inicializar datos
-if (!localStorage.getItem('pezu_notas')) {
-  localStorage.setItem('pezu_notas', JSON.stringify(NOTAS_INICIALES));
-}
-if (!localStorage.getItem('pezu_tareas')) {
-  localStorage.setItem('pezu_tareas', JSON.stringify(TAREAS_INICIALES));
-}
+        // Initialize legacy tasks if no data
+        if (cards.length === 0) {
+            legacyTasks.forEach((task, index) => {
+                cards.push({
+                    id: `legacy_${index}`,
+                    title: task.text,
+                    content: "Migrated from legacy data",
+                    priority: task.priority,
+                    column: task.column,
+                    created: new Date().toISOString(),
+                    tags: ["legacy"]
+                });
+            });
+            saveCards();
+        }
 
-let notas = JSON.parse(localStorage.getItem('pezu_notas') || '[]');
-let tareas = JSON.parse(localStorage.getItem('pezu_tareas') || '[]');
+        // Save to localStorage
+        function saveCards() {
+            localStorage.setItem('pezunokeep-cards', JSON.stringify(cards));
+            updateCounts();
+        }
 
-function guardarDatos() {
-  localStorage.setItem('pezu_notas', JSON.stringify(notas));
-  localStorage.setItem('pezu_tareas', JSON.stringify(tareas));
-}
+        // Update column counts
+        function updateCounts() {
+            const columns = ['inbox', 'today', 'calendar', 'projects', 'references'];
+            columns.forEach(col => {
+                const count = cards.filter(c => c.column === col).length;
+                document.getElementById(`count-${col}`).textContent = count;
+            });
+        }
 
-function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
+        // Render cards
+        function renderCards() {
+            const columns = ['inbox', 'today', 'calendar', 'projects', 'references'];
+            columns.forEach(col => {
+                const container = document.getElementById(`${col}-cards`);
+                container.innerHTML = '';
+                const colCards = cards.filter(c => c.column === col);
+                
+                colCards.forEach(card => {
+                    const cardEl = createCardElement(card);
+                    container.appendChild(cardEl);
+                });
+            });
+            updateCounts();
+        }
 
-function render() {
-  const divNotas = document.getElementById('listaNotas');
-  divNotas.innerHTML = '';
-  notas.slice().reverse().forEach((n, i) => {
-    const div = document.createElement('div');
-    div.className = 'nota';
-    div.innerHTML = '<div class="nota-texto">' + esc(n.text) + '</div><div class="nota-fecha">' + new Date(n.time).toLocaleString('es-CL') + '</div><button class="btn-borrar" onclick="borrarNota(' + (notas.length - 1 - i) + ')" style="margin-top:0.5rem">🗑️</button>';
-    divNotas.appendChild(div);
-  });
+        // Create card element
+        function createCardElement(card) {
+            const div = document.createElement('div');
+            div.className = `card card-priority-${card.priority}`;
+            div.draggable = true;
+            div.dataset.id = card.id;
+            
+            const priorityEmoji = { high: '🔴', medium: '🟡', low: '🔵' };
+            
+            div.innerHTML = `
+                <div class="card-title">${card.title}</div>
+                <div class="card-meta">
+                    <span>${priorityEmoji[card.priority]}</span>
+                    <span>${card.tags?.map(t => `<span class="tag">#${t}</span>`).join('') || ''}</span>
+                </div>
+            `;
 
-  const divTareas = document.getElementById('listaTareas');
-  divTareas.innerHTML = '';
-  tareas.forEach((t, i) => {
-    const div = document.createElement('div');
-    div.className = 'item-lista' + (t.done ? ' checkeado' : '');
-    div.innerHTML = '<input type="checkbox" class="checkbox-grande"' + (t.done ? ' checked' : '') + ' onchange="toggleTarea(' + i + ')"><span class="texto">' + esc(t.text) + '</span><button class="btn-borrar" onclick="borrarTarea(' + i + ')">✕</button>';
-    divTareas.appendChild(div);
-  });
-}
+            // Drag events
+            div.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData('text/plain', card.id);
+                div.classList.add('dragging');
+            });
 
-function agregarNota() {
-  const input = document.getElementById('nuevaNota');
-  if (!input.value.trim()) return;
-  notas.push({ text: input.value.trim(), time: Date.now() });
-  input.value = '';
-  guardarDatos();
-  render();
-}
+            div.addEventListener('dragend', () => {
+                div.classList.remove('dragging');
+            });
 
-function agregarTarea() {
-  const input = document.getElementById('nuevaTarea');
-  if (!input.value.trim()) return;
-  tareas.push({ text: input.value.trim(), done: false, time: Date.now() });
-  input.value = '';
-  guardarDatos();
-  render();
-}
+            div.addEventListener('click', () => editCard(card.id));
 
-function toggleTarea(i) {
-  tareas[i].done = !tareas[i].done;
-  guardarDatos();
-  render();
-}
+            return div;
+        }
 
-function borrarNota(i) {
-  notas.splice(i, 1);
-  guardarDatos();
-  render();
-}
+        // Add card
+        function addCard(column) {
+            currentColumn = column;
+            document.getElementById('modal-title').textContent = 'Nueva Nota';
+            document.getElementById('note-title').value = '';
+            document.getElementById('note-content').value = '';
+            document.getElementById('note-priority').value = 'medium';
+            document.getElementById('modal').classList.add('active');
+        }
 
-function borrarTarea(i) {
-  tareas.splice(i, 1);
-  guardarDatos();
-  render();
-}
+        // Edit card
+        function editCard(id) {
+            const card = cards.find(c => c.id === id);
+            if (!card) return;
 
-function guardar() {
-  const data = { notas, tareas, guardado: new Date().toISOString() };
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'PezuñoKeep.json';
-  a.click();
-}
+            currentColumn = card.column;
+            document.getElementById('modal-title').textContent = 'Editar Nota';
+            document.getElementById('note-title').value = card.title;
+            document.getElementById('note-content').value = card.content;
+            document.getElementById('note-priority').value = card.priority;
+            document.getElementById('modal').classList.add('active');
+        }
 
-function cargar(input) {
-  const f = input.files[0];
-  if (!f) return;
-  const r = new FileReader();
-  r.onload = e => {
-    try {
-      const d = JSON.parse(e.target.result);
-      if (d.notas) { notas = d.notas; }
-      if (d.tareas) { tareas = d.tareas; }
-      guardarDatos();
-      render();
-      alert('📤 Datos cargados!');
-    } catch(err) {
-      alert('Error: ' + err.message);
-    }
-  };
-  r.readAsText(f);
-  input.value = '';
-}
+        // Save card
+        function saveCard() {
+            const title = document.getElementById('note-title').value;
+            const content = document.getElementById('note-content').value;
+            const priority = document.getElementById('note-priority').value;
 
-document.getElementById('nuevaNota').addEventListener('keydown', e => { if(e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); agregarNota(); } });
-document.getElementById('nuevaTarea').addEventListener('keydown', e => { if(e.key === 'Enter') { e.preventDefault(); agregarTarea(); } });
+            if (!title.trim()) return;
 
-render();
-</script>
+            const newCard = {
+                id: Date.now().toString(),
+                title,
+                content,
+                priority,
+                column: currentColumn,
+                created: new Date().toISOString(),
+                tags: []
+            };
+
+            cards.push(newCard);
+            saveCards();
+            renderCards();
+            closeModal();
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        // Toggle FAB menu
+        function toggleFabMenu() {
+            const menu = document.getElementById('fab-menu');
+            menu.classList.toggle('active');
+        }
+
+        // Drop zones
+        document.querySelectorAll('.cards-container').forEach(container => {
+            container.addEventListener('dragover', (e) => {
+                e.preventDefault();
+            });
+
+            container.addEventListener('drop', (e) => {
+                e.preventDefault();
+                const cardId = e.dataTransfer.getData('text/plain');
+                const card = cards.find(c => c.id === cardId);
+                if (card) {
+                    const newColumn = container.id.replace('-cards', '');
+                    card.column = newColumn;
+                    saveCards();
+                    renderCards();
+                }
+            });
+        });
+
+        // Close modal on overlay click
+        document.getElementById('modal').addEventListener('click', (e) => {
+            if (e.target.id === 'modal') closeModal();
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+            if (e.ctrlKey && e.key === 'n') {
+                e.preventDefault();
+                addCard('inbox');
+            }
+        });
+
+        // Initialize
+        renderCards();
+
+        // Check for daily reminder (Desvenlafaxina 09:00)
+        const now = new Date();
+        if (now.getHours() === 9 && now.getMinutes() < 10) {
+            if (!localStorage.getItem('medication-reminder-today')) {
+                alert('🐴 Pezuño dice: ¡Hora de tomar tu Desvenlafaxina! 💊');
+                localStorage.setItem('medication-reminder-today', 'true');
+            }
+        }
+
+        // Reset medication reminder at midnight
+        if (now.getHours() === 0 && now.getMinutes() < 5) {
+            localStorage.removeItem('medication-reminder-today');
+        }
+
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(registration => {
+                    console.log('PezuñoKeep: SW registrado');
+                })
+                .catch(error => {
+                    console.log('PezuñoKeep: SW falló', error);
+                });
+        }
+    </script>
 </body>
 </html>

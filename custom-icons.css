@@ -1,0 +1,70 @@
+/* PezuñoKeep Custom Icons - Usando iconos reales de caballo */
+
+.logo-img {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    box-shadow: 3px 3px 6px var(--shadow-light), -3px -3px 6px var(--white);
+    object-fit: cover;
+}
+
+.column-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    box-shadow: 2px 2px 4px var(--shadow-light);
+    object-fit: cover;
+    margin-right: 8px;
+}
+
+/* Para INBOX: usar icono principal de caballo */
+.column-inbox .column-title::before {
+    content: "";
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    background-image: url('../../branding/icons/main/64x64/Copilot_20260412_203927-64.png');
+    background-size: cover;
+    border-radius: 6px;
+    margin-right: 8px;
+    box-shadow: 2px 2px 4px var(--shadow-light);
+}
+
+/* Para HOY: usar variante */
+.column-today .column-title::before {
+    content: "";
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    background-image: url('../../branding/icons/variants/64x64/Copilot_20260412_204207-64.png');
+    background-size: cover;
+    border-radius: 6px;
+    margin-right: 8px;
+    box-shadow: 2px 2px 4px var(--shadow-light);
+}
+
+/* Para PROYECTOS: usar otra variante */
+.column-projects .column-title::before {
+    content: "";
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    background-image: url('../../branding/icons/variants/64x64/Copilot_20260412_204350-64.png');
+    background-size: cover;
+    border-radius: 6px;
+    margin-right: 8px;
+    box-shadow: 2px 2px 4px var(--shadow-light);
+}
+
+/* Ocultar el emoji span cuando hay icono */
+.column-inbox .column-title span:first-child,
+.column-today .column-title span:first-child,
+.column-projects .column-title span:first-child {
+    display: none;
+}
+
+/* CALENDARIO y REFERENCIAS mantienen emojis */
+.column-calendar .column-title span:first-child,
+.column-references .column-title span:first-child {
+    display: inline;
+}

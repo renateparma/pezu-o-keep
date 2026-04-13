@@ -1,0 +1,33 @@
+{
+  "name": "PezuñoKeep",
+  "short_name": "PezuñoKeep",
+  "description": "Gestión de caballos y equipamiento",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F3F2E7",
+  "theme_color": "#523626",
+  "orientation": "portrait",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "../../02_BRANDING/icons/main/64x64/Copilot_20260412_203927-64.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "../../02_BRANDING/icons/main/128x128/Copilot_20260412_203927-128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "../../02_BRANDING/icons/main/256x256/Copilot_20260412_203927-256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "../../02_BRANDING/icons/main/512x512/Copilot_20260412_203927-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
