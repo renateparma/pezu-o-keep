@@ -744,9 +744,34 @@
                     <option value="high">🔴 Alta</option>
                 </select>
             </div>
+            <div class="input-group">
+                <label for="note-icon">Icono</label>
+                <div class="icon-selector" id="icon-selector" onclick="openIconGalleryForCard()">
+                    <span id="selected-icon-preview">🐴</span>
+                    <span>Haz clic para elegir un caballo o equipo</span>
+                </div>
+                <input type="hidden" id="note-icon" value="">
+            </div>
             <div class="modal-actions">
                 <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
                 <button class="btn btn-primary" onclick="saveCard()">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Icon Gallery Modal -->
+    <div class="icon-gallery" id="icon-gallery">
+        <div class="icon-gallery-content">
+            <div class="icon-gallery-header">
+                <h3>🐴 Selecciona un Icono</h3>
+                <button class="btn-icon" onclick="closeIconGallery()">✕</button>
+            </div>
+            <div class="icon-gallery-tabs">
+                <button class="icon-tab active" onclick="showIconTab('horses')" data-tab="horses">Caballos</button>
+                <button class="icon-tab" onclick="showIconTab('equipment')" data-tab="equipment">Equipo</button>
+            </div>
+            <div class="icon-grid" id="icon-grid">
+                <!-- Icons loaded dynamically -->
             </div>
         </div>
     </div>
@@ -964,6 +989,151 @@
                     console.log('PezuñoKeep: SW falló', error);
                 });
         }
+
+        // Icon Gallery Functions
+        let selectedIconForCard = '';
+
+        function openIconGalleryForCard() {
+            openIconGallery();
+        }
+
+        function openIconGallery() {
+            document.getElementById('icon-gallery').classList.add('active');
+            showIconTab('horses');
+        }
+
+        function closeIconGallery() {
+            document.getElementById('icon-gallery').classList.remove('active');
+        }
+
+        function showIconTab(category) {
+            // Update active tab
+            document.querySelectorAll('.icon-tab').forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.dataset.tab === category) {
+                    tab.classList.add('active');
+                }
+            });
+
+            // Load icons
+            const grid = document.getElementById('icon-grid');
+            grid.innerHTML = '';
+
+            const icons = [];
+            for (let i = 0; i < 56; i++) {
+                icons.push(`${category}_${String(i).padStart(2, '0')}.png`);
+            }
+
+            icons.forEach((icon, idx) => {
+                const item = document.createElement('div');
+                item.className = 'icon-item';
+                item.onclick = () => selectIcon(`${category}/${icon}`);
+                item.innerHTML = `
+                    <img src="/icons/${category}/${icon}" alt="${category} ${idx}">
+                    <span>${category} ${idx}</span>
+                `;
+                grid.appendChild(item);
+            });
+        }
+
+        function selectIcon(iconPath) {
+            selectedIconForCard = iconPath;
+            document.getElementById('selected-icon-preview').innerHTML = `<img src="/icons/${iconPath}" style="width:32px;height:32px;border-radius:6px;object-fit:cover;">`;
+            document.getElementById('note-icon').value = iconPath;
+            closeIconGallery();
+        }
+
+        // Update createCardElement to show icon
+        const originalCreateCardElement = createCardElement;
+        createCardElement = function(card) {
+            const div = document.createElement('div');
+            div.className = `card card-priority-${card.priority}`;
+            div.draggable = true;
+            div.dataset.id = card.id;
+            
+            const priorityEmoji = { high: '🔴', medium: '🟡', low: '🔵' };
+            
+            let iconHtml = '';
+            if (card.icon) {
+                iconHtml = `<img src="/icons/${card.icon}" class="card-icon" alt="icon">`;
+            } else {
+                iconHtml = `<div class="card-icon-placeholder">🐴</div>`;
+            }
+            
+            div.innerHTML = `
+                ${iconHtml}
+                <div class="card-title">${card.title}</div>
+                <div class="card-meta">
+                    <span>${priorityEmoji[card.priority]}</span>
+                    <span>${card.tags?.map(t => `<span class="tag">#${t}</span>`).join('') || ''}</span>
+                </div>
+            `;
+
+            div.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData('text/plain', card.id);
+                div.classList.add('dragging');
+            });
+
+            div.addEventListener('dragend', () => {
+                div.classList.remove('dragging');
+            });
+
+            div.addEventListener('click', () => editCard(card.id));
+
+            return div;
+        };
+
+        // Update saveCard to include icon
+        const originalSaveCard = saveCard;
+        saveCard = function() {
+            const title = document.getElementById('note-title').value;
+            const content = document.getElementById('note-content').value;
+            const priority = document.getElementById('note-priority').value;
+            const icon = document.getElementById('note-icon').value;
+
+            if (!title.trim()) return;
+
+            const newCard = {
+                id: Date.now().toString(),
+                title,
+                content,
+                priority,
+                icon: icon || null,
+                column: currentColumn,
+                created: new Date().toISOString(),
+                tags: []
+            };
+
+            cards.push(newCard);
+            saveCards();
+            renderCards();
+            closeModal();
+        };
+
+        // Update editCard to show current icon
+        const originalEditCard = editCard;
+        editCard = function(id) {
+            const card = cards.find(c => c.id === id);
+            if (!card) return;
+
+            currentColumn = card.column;
+            document.getElementById('modal-title').textContent = 'Editar Nota';
+            document.getElementById('note-title').value = card.title;
+            document.getElementById('note-content').value = card.content;
+            document.getElementById('note-priority').value = card.priority;
+            
+            if (card.icon) {
+                selectedIconForCard = card.icon;
+                document.getElementById('selected-icon-preview').innerHTML = `<img src="/icons/${card.icon}" style="width:32px;height:32px;border-radius:6px;object-fit:cover;">`;
+                document.getElementById('note-icon').value = card.icon;
+            } else {
+                selectedIconForCard = '';
+                document.getElementById('selected-icon-preview').textContent = '🐴';
+                document.getElementById('note-icon').value = '';
+            }
+            
+            document.getElementById('modal').classList.add('active');
+        };
     </script>
 </body>
 </html>
